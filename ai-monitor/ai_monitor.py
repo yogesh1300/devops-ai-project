@@ -5,7 +5,7 @@ from sklearn.ensemble import IsolationForest
 import datetime
 
 # Slack Webhook URL
-SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
+SLACK_WEBHOOK = "https://hooks.slack.com/services/..."
 
 # Prometheus URL
 PROMETHEUS_URL = "http://localhost:9090"
