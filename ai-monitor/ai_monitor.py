@@ -4,6 +4,9 @@ import numpy as np
 from sklearn.ensemble import IsolationForest
 import datetime
 
+# Slack Webhook URL
+SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
+
 # Prometheus URL
 PROMETHEUS_URL = "http://localhost:9090"
 
@@ -19,6 +22,11 @@ def get_metrics():
         return total
     except:
         return 0
+
+def send_slack_alert(message):
+    payload = {"text": message}
+    requests.post(SLACK_WEBHOOK, json=payload)
+    print(f"🔔 Slack alert sent!")
 
 def detect_anomaly(data):
     if len(data) < 10:
@@ -41,6 +49,7 @@ def main():
 
         if detect_anomaly(metrics_history):
             print(f"🚨 ANOMALY DETECTED at {now}! Value: {value}")
+            send_slack_alert(f"🚨 ANOMALY DETECTED!\nTime: {now}\nRequest count: {value}\nCheck your app immediately!")
         else:
             print(f"✅ Normal at {now}")
 
